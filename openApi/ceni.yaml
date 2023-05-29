@@ -126,8 +126,8 @@ components:
     Localisation:
       type: object
       properties:
-        LocalisationID:
-          type: string
+        localisationID:
+          type: integer
         region:
           type: string
         district:
@@ -140,10 +140,10 @@ components:
     BureauVote:
       type: object
       properties:
-        BureauID:
-          type: string
-        LocalisationID:
-          type: string
+        bureauID:
+          type: integer
+        localisationID:
+          type: integer
 
     Electeur:
       type: object
@@ -154,7 +154,7 @@ components:
           type: string
         travail:
           type: string
-        BureauID:
+        bureauID:
           type: string
 
     ElecteurStat:
@@ -162,5 +162,5 @@ components:
       properties:
         nbrElecteur:
           type: string
-        BureauID:
+        bureauID:
           type: string

@@ -98,7 +98,7 @@ components:
       type: object
       properties:
         userId:
-          type: string
+          type: integer
         username:
           type: string
         password:
@@ -106,6 +106,8 @@ components:
         group:
           type: string
         email:
+          type: string
+        phone:
           type: string
         facebookId:
           type: string

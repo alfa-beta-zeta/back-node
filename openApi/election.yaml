@@ -68,8 +68,8 @@ components:
     Candidat:
       type: object
       properties:
-        CandidatID:
-          type: string
+        candidatID:
+          type: integer
         name:
           type: string
         numero:
@@ -78,7 +78,7 @@ components:
     Result:
       type: object
       properties:
-        CandidatID:
-          type: string
+        candidatID:
+          type: integer
         bureauID:
-          type: string
+          type: integer
