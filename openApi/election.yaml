@@ -1,0 +1,84 @@
+openapi: 3.0.0
+info:
+  title: Election Management API
+  version: 1.0.0
+  description: API for managing election-related data
+
+paths:
+  /candidats:
+    get:
+      summary: Get all candidats
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Candidat'
+
+    post:
+      summary: Create a new candidat
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Candidat'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Candidat'
+
+  /results:
+    get:
+      summary: Get all results
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Result'
+
+    post:
+      summary: Create a new result
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Result'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+
+components:
+  schemas:
+    Candidat:
+      type: object
+      properties:
+        CandidatID:
+          type: string
+        name:
+          type: string
+        numero:
+          type: integer
+
+    Result:
+      type: object
+      properties:
+        CandidatID:
+          type: string
+        bureauID:
+          type: string

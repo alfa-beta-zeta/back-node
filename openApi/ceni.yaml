@@ -1,0 +1,166 @@
+openapi: 3.0.0
+info:
+  title: Election Management API
+  version: 1.0.0
+  description: API for managing election-related data
+
+paths:
+  /localisations:
+    get:
+      summary: Get all localisations
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Localisation'
+
+    post:
+      summary: Create a new localisation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Localisation'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Localisation'
+
+  /bureauVotes:
+    get:
+      summary: Get all bureau votes
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BureauVote'
+
+    post:
+      summary: Create a new bureau vote
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BureauVote'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BureauVote'
+
+  /electeurs:
+    get:
+      summary: Get all electeurs
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Electeur'
+
+    post:
+      summary: Create a new electeur
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Electeur'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Electeur'
+
+  /electeurStats:
+    get:
+      summary: Get all electeur stats
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ElecteurStat'
+
+    post:
+      summary: Create a new electeur stat
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ElecteurStat'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ElecteurStat'
+
+components:
+  schemas:
+    Localisation:
+      type: object
+      properties:
+        LocalisationID:
+          type: string
+        region:
+          type: string
+        district:
+          type: string
+        commune:
+          type: string
+        quartier:
+          type: string
+
+    BureauVote:
+      type: object
+      properties:
+        BureauID:
+          type: string
+        LocalisationID:
+          type: string
+
+    Electeur:
+      type: object
+      properties:
+        name:
+          type: string
+        sexe:
+          type: string
+        travail:
+          type: string
+        BureauID:
+          type: string
+
+    ElecteurStat:
+      type: object
+      properties:
+        nbrElecteur:
+          type: string
+        BureauID:
+          type: string
