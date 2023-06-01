@@ -5,8 +5,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const userRoutes = require('./app/routes/userRoutes');
+const candidatesRoutes = require('./app/routes/candidatesRoutes');
+
 const { Sequelize } = require('sequelize');
 const userModel = require('./app/models/userModel');
+const candidatesModel = require('./app/models/candidatesModel');
 
 const app = express();
 
@@ -32,6 +35,7 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, proces
 
 // Load models
 const User = userModel(sequelize, Sequelize);
+const Candidates = candidatesModel(sequelize, Sequelize);
 
 // Sync models with the database
 sequelize.sync({ force: false }).then(() => {
@@ -40,6 +44,7 @@ sequelize.sync({ force: false }).then(() => {
 
 // Routes
 app.use('/users', userRoutes(User));
+app.use('/candidates', candidatesRoutes(Candidates));
 
 // Export the app object
 module.exports = app;
