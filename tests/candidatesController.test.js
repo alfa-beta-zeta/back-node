@@ -1,39 +1,28 @@
 const request = require('supertest');
-const app = require('../server'); // Assuming your Express app is exported from server.js
-const { sequelize } = require('../server'); // Import the sequelize instance from server.js
-
+const app = require('../server');
 
 describe('Candidates Controller', () => {
     // Test data
     const testCandidate = {
-        fullName: 'John Doe',
-        numero: '123456789',
+        fullName: 'TestCandidate',
+        numero: '1234567890',
     };
-
     let createdCandidateId;
-
-    // Connect to the database before running the tests
-    beforeAll(async () => {
-        await sequelize.authenticate();
-    });
-
-    // Close the database connection after running the tests
-    afterAll(async () => {
-        await sequelize.close();
-    });
 
     // Test the creation of a new candidate
     it('should create a new candidate', async () => {
         const response = await request(app)
             .post('/candidates')
-            .send(testCandidate)
-            .expect(201);
+            .send(testCandidate);
 
-        const createdCandidate = response.body;
-        createdCandidateId = createdCandidate.candidateId;
+        console.log('Response:', response.status);
+        console.log('Response body:', response.body);
 
-        expect(createdCandidate.fullName).toBe(testCandidate.fullName);
-        expect(createdCandidate.numero).toBe(testCandidate.numero);
+        createdCandidateId = response.body.candidateId;
+
+        expect(response.status).toBe(201);
+        expect(response.body.fullName).toBe(testCandidate.fullName);
+        expect(response.body.numero).toBe(testCandidate.numero);
     });
 
     // Test retrieving a candidate by ID
@@ -42,18 +31,19 @@ describe('Candidates Controller', () => {
             .get(`/candidates/${createdCandidateId}`)
             .expect(200);
 
-        const candidate = response.body;
+        console.log('Response:', response.status);
+        console.log('Response body:', response.body);
 
-        expect(candidate.candidateId).toBe(createdCandidateId);
-        expect(candidate.fullName).toBe(testCandidate.fullName);
-        expect(candidate.numero).toBe(testCandidate.numero);
+        expect(response.body.candidateId).toBe(createdCandidateId);
+        expect(response.body.fullName).toBe(testCandidate.fullName);
+        expect(response.body.numero).toBe(testCandidate.numero);
     });
 
     // Test updating a candidate by ID
     it('should update a candidate by ID', async () => {
         const updatedCandidate = {
-            fullName: 'Jane Smith',
-            numero: '987654321',
+            fullName: 'Updated Candidate',
+            numero: '9876543210',
         };
 
         const response = await request(app)
@@ -61,22 +51,28 @@ describe('Candidates Controller', () => {
             .send(updatedCandidate)
             .expect(200);
 
-        const candidate = response.body;
+        console.log('Response:', response.status);
+        console.log('Response body:', response.body);
 
-        expect(candidate.candidateId).toBe(createdCandidateId);
-        expect(candidate.fullName).toBe(updatedCandidate.fullName);
-        expect(candidate.numero).toBe(updatedCandidate.numero);
+        expect(response.body.candidateId).toBe(createdCandidateId);
+        expect(response.body.fullName).toBe(updatedCandidate.fullName);
+        expect(response.body.numero).toBe(updatedCandidate.numero);
     });
 
     // Test deleting a candidate by ID
     it('should delete a candidate by ID', async () => {
-        await request(app)
+        const response = await request(app)
             .delete(`/candidates/${createdCandidateId}`)
             .expect(204);
 
-        // Verify the candidate is deleted by trying to retrieve it again
-        await request(app)
+        console.log('Response:', response.status);
+
+        const deletedCandidate = await request(app)
             .get(`/candidates/${createdCandidateId}`)
             .expect(404);
+
+        console.log('Deleted candidate:', deletedCandidate.status);
+
+        expect(deletedCandidate.body.error).toBe('Candidate not found');
     });
 });

@@ -29,7 +29,7 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, proces
         await sequelize.authenticate();
         console.log('Connected to the database successfully.');
     } catch (error) {
-        console.error('Unable to connect to the database:', error);
+        // console.error('Unable to connect to the database:', error);
     }
 })();
 
@@ -54,3 +54,4 @@ const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);
 });
+

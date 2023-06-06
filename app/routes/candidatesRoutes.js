@@ -4,19 +4,19 @@ const candidatesController = require('../controllers/candidatesController');
 
 module.exports = (Candidates) => {
     // Create a new candidate
-    router.post('/', candidatesController.createCandidate);
+    router.post('/', candidatesController.createCandidate(Candidates));
 
     // Get all candidates
-    router.get('/', candidatesController.getAllCandidates);
+    router.get('/', candidatesController.getAllCandidates(Candidates));
 
     // Get a candidate by ID
-    router.get('/:id', candidatesController.getCandidateById);
+    router.get('/:candidateId', candidatesController.getCandidateById(Candidates));
 
     // Update a candidate by ID
-    router.put('/:id', candidatesController.updateCandidateById);
+    router.put('/:candidateId', candidatesController.updateCandidateById(Candidates));
 
     // Delete a candidate by ID
-    router.delete('/:id', candidatesController.deleteCandidateById);
+    router.delete('/:candidateId', candidatesController.deleteCandidateById(Candidates));
 
     return router;
 };
